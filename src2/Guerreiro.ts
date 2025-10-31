@@ -1,17 +1,16 @@
 import { Personagem } from "./Personagem";
-import { Ramdom } from "./SystemRamdom/Ramdom";
+import { Util } from "./RandomGerador/Util";
 export class Guerreiro extends Personagem {
   constructor(nome: string) {
     super(
-
-        nome + " Warrior",
-        Ramdom.randomizar(1, 1000),
-        0,
-        0,
-        Ramdom.randomizar(0, 50),
-        Ramdom.randomizar(0, 90),
-        0,
-        Ramdom.randomizar(1, 40_000)
+      nome + " Warrior",
+      Util.randomizar(1, 1000),
+      0,
+      0,
+      Util.randomizar(0, 50),
+      Util.randomizar(0, 90),
+      0,
+      Util.randomizar(1, 40000)
     );
     this._poderDeAtaque = this._forca * 10;
     this._vidaAtual = this._vidaMaxima;
@@ -29,17 +28,19 @@ export class Guerreiro extends Personagem {
   }
 
   public aprimorarHabilidadePrincipal(): void {
-    
     this._forca *= 1.1;
     this.atualizarPoderDeAtaque();
   }
 
   public regenerarVida(): void {
-    this._vidaAtual = Math.min(this._vidaMaxima, this._vidaAtual + this._vidaMaxima * 0.1);
+    this._vidaAtual = Math.min(
+      this._vidaMaxima,
+      this._vidaAtual + this._vidaMaxima * 0.1
+    );
   }
 
   protected _ataque(oponente: Personagem): void {
-    const acertou: boolean = Ramdom.randomizar(0, 100) > oponente.esquiva;
+    const acertou: boolean = Util.randomizar(0, 50) > oponente.esquiva;
     if (acertou) {
       const danoCausado: number =
         (1 - oponente.resistencia / 100) * this._poderDeAtaque;
@@ -57,7 +58,4 @@ export class Guerreiro extends Personagem {
   private atualizarPoderDeAtaque(): void {
     this._poderDeAtaque = this._forca * 10;
   }
-
-
-
 }
